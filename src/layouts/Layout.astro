@@ -13,6 +13,9 @@ const { title } = Astro.props;
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
@@ -21,30 +24,40 @@ const { title } = Astro.props;
 	</body>
 </html>
 <style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+	@font-face {
+		font-family: 'Gotham';
+		src: url('/src/assets/fonts/gotham_book_regular-webfont.ttf') format('truetype');
+		font-weight: normal;
+		font-style: normal;
 	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
+	@font-face {
+		font-family: 'GothamMedium';
+		src: url('/src/assets/fonts/gothammedium-webfont.ttf') format('truetype');
+		font-weight: normal;
+		font-style: normal;
 	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
+	.primary-color {
+		color: #006268;
+	}
+	.primary-bg {
+		background-color: #006268;
+	}
+	h1, h2, h3, h4, h5, h6, p {
+		color: #323232;
+	}
+	h1, h2, h3, h5, h6 {
+		font-family: "Libre Baskerville", sans-serif !important;
+		line-height: 57.2px;
+	}
+	p, h4 {
+		font-family: 'Gotham', sans-serif;
+	}
+	h4 {
+		font-family: 'GothamMedium', sans-serif;
+	}
+	.highlighter {
+		font-style: inherit;
+		background-color: #FDF538;
+		padding-right: 5px;
 	}
 </style>

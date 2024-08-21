@@ -1,0 +1,33 @@
+---
+import { getEntries } from '../contentful';
+
+const entries = await getEntries('stories');
+---
+
+<html>
+  <head>
+    <title>Seed Company Stories</title>
+  </head>
+  <body>
+    <div class="md:flex gap-20">
+        {entries.items
+            .filter((entry) => entry.fields.category == "Featured")
+            .map((entry) => (
+              <div class="w-full mb-10">
+                {entry.fields.featuredImage && (
+                  <img
+                    class="rounded-md max-h-[350px] object-cover w-full"
+                    src={entry.fields.featuredImage.fields.file.url}
+                    alt={
+                      entry.fields.featuredImage.fields.title || entry.fields.title
+                    }
+                    style="max-width: 100%; height: auto;"
+                  />
+                )}
+                <h2 class="text-2xl my-5">{entry.fields.title}</h2>
+                <p>{entry.fields.excerpt.content[0].content[0].value}</p>
+              </div>
+            ))}
+      </div>      
+  </body>
+</html>
