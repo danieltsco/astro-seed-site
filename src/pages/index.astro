@@ -5,26 +5,27 @@ import Hero from '../components/Hero.astro';
 import OverviewVideo from '../components/OveriewVideo.astro';
 import RendilleVideo from '../components/RendilleVideo.astro';
 import Stories from '../components/Stories.astro';
-
+import Bernie from '../components/Bernie.astro';
+import CTA from '../components/CTA.astro';
 ---
 
 <Layout title="Seed Company">
 	<Navbar />
 	<Hero /> 
-	<section class="mx-auto max-w-7xl px-[20px]">
+	<section class="mx-auto max-w-5xl px-[20px]">
 		<OverviewVideo />
 	</section>
-	<section class="mx-auto max-w-7xl px-[20px] my-10 md:my-20">
+	<section class="mx-auto max-w-5xl px-[20px] my-10 md:my-20">
 		<div class="md:max-w-[600px] w-full mb-5 md:mb-10">
 			<h4 class="primary-color uppercase mb-2 md:mb-5 font-bold">Stories</h4>
 			<h2 class="text-2xl md:text-4xl">Meet People Who Discovered Hope and Freedom through <span class="highlighter">Translated Scripture</span></h2>
 		</div>
 	</section>
-	<section class="max-w-7xl mx-auto px-[20px] mb-20">
+	<section class="max-w-5xl mx-auto px-[20px] mb-20">
 		<Stories />
 	</section>
-	<section class="bg-[url(https://seedcompany.com/wp-content/uploads/2021/09/tear-bg-1.png)] bg-no-repeat bg-cover mb-[-80px] md:mb-[-100px]">
-		<div class="mx-auto max-w-7xl px-[20px] py-20 md:py-40 md:flex gap-[20px] md:gap-[60px]">
+	<section class="bg-[url(https://seedcompany.com/wp-content/uploads/2021/09/tear-bg-1.png)] bg-no-repeat bg-cover pb-10 md:pb-20">
+		<div class="mx-auto max-w-5xl px-[20px] py-20 md:pt-40 mb:pb-5 md:flex gap-[20px] md:gap-[60px]">
 			<div class="w-full mb-10 md:mb-[0px]">
 				<h4 class="uppercase mb-2 md:mb-5 font-bold">Why Bible Translation?</h4>
 				<h2 class="text-2xl md:text-4xl">God's Word for Every People Group <span class="highlighter">in Our Lifetime</span></h2>
@@ -37,8 +38,68 @@ import Stories from '../components/Stories.astro';
 				</a>	
 			</div>
 		</div>
-		<div class="max-w-7xl mx-auto px-[20px] mb-20">
+		<div class="max-w-5xl mx-auto px-[20px]">
 			<RendilleVideo />
 		</div>
 	</section>
+	<section>
+		<div class="max-w-5xl mx-auto px-[20px] py-5 md:py-20 mb-20">
+			<div class="md:flex">
+				<div class="w-full mb-10 md:mb-[0px] relative">
+					<div>
+					<h4 class="uppercase mb-2 md:mb-5 font-bold">Our Impact</h4>
+					<h2 class="text-2xl md:text-4xl"><span class="highlighter">Accelerating</span> Bible Translation</h2>
+					</div>
+				</div>
+				<div class="w-full">
+					<div class="pb-10">
+						<p class="text-xl mb-5">Seed Company is helping more people groups around the world take ownership of Bible translation in their own language.</p>
+						<p>We come alongside our partners with strategies, technologies, and shared resources that increase the pace of Bible translation—and lead to God's Word transforming lives.</p>
+					</div>
+					<div class="md:flex items-center py-10 px-[10px] border-t-[1px] border-slate-200">
+						<h3 class="text-4xl bold pr-5"><span id="counterDisplay"></span>+</h3>
+						<p class="text-lg">Language translations in progress</p>
+					</div>
+					<div class="md:flex items-center py-10 px-[10px] border-t-[1px] border-slate-200">
+						<h3 class="text-4xl bold pr-5"><span id="counterDisplay2"></span>M</h3>
+						<p class="text-lg">People currently reached</p>
+					</div>
+					<div class="md:flex items-center py-10 px-[10px] mb-10 border-y-[1px] border-slate-200">
+						<h3 class="text-4xl bold pr-5"><span id="counterDisplay3"></span>+</h3>
+						<p class="text-lg">Countries actively partnering with us</p>
+					</div>
+					<p class="text-lg">Learn more about our impact</p>
+					<a href="/impact" class="primary-color uppercase">See Our Impact </a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="mx-auto max-w-5xl px-[20px] py-20 md:py-20 mb-20 primary-bg">
+		<Bernie />
+	</section>
+	<section class="mx-auto max-w-5xl px-[20px] py-5 md:py-20 mb-20">
+		<CTA />
+	</section>
 </Layout>
+<style>
+	
+</style>
+<script>
+	// Animate OUR IMPACT data
+	function countTo(max, increment, delay, elementId) {
+		let counter = 0; // start from 0
+		let display = document.getElementById(elementId); // element to animate
+
+		function updateCounter() { // update function
+			if ( counter <= max ) { 
+				display.textContent = counter; // show counter
+				counter += increment; // increment counter
+				setTimeout(updateCounter, delay); // add a delay
+			}
+		}
+		updateCounter(); // call the updated function
+	}
+	countTo(900, 5, 5, 'counterDisplay');
+	countTo(866, 1, 1, 'counterDisplay2');
+	countTo(130, 1, 1, 'counterDisplay3');
+</script>
