@@ -1,0 +1,41 @@
+---
+import { getEntries } from '../contentful';
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import Layout from "../layouts/Layout.astro";
+
+const entries = await getEntries('people');
+---
+
+<Layout title="About Us">
+    <Navbar />
+    <section class="max-w-5xl mx-auto px-[20px] md:py-20 lg:py-56">
+        <h1 class="text-4xl">This is the About Page</h1>
+        <div>
+            {entries.items.length > 0 ? (
+                entries.items.map((entry) => (
+                  <a
+                    href={`/people/${entry.fields.slug}`} 
+                    class="story_grid__item mb-5 md:mb-10"
+                  >
+                    {entry.fields.featuredImage && (
+                      <img
+                        class="rounded-md"
+                        src={entry.fields.featuredImage.fields.file.url}
+                        alt={
+                          entry.fields.featuredImage.fields.title || entry.fields.title
+                        }
+                        style="max-width: 100%; height: auto;"
+                      />
+                    )}
+                    <h2 class="text-2xl my-5">{entry.fields.title}</h2>
+                    <p>{entry.fields.excerpt?.content[0]?.content[0]?.value}</p>
+                  </a>
+                ))
+            ) : (
+                <p>No people entries found.</p>
+            )}
+        </div>
+    </section>
+    <Footer />
+</Layout>

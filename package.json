@@ -12,6 +12,8 @@
   "dependencies": {
     "@astrojs/check": "^0.9.3",
     "@astrojs/tailwind": "^5.1.0",
+    "@contentful/rich-text-html-renderer": "^16.6.9",
+    "@heroicons/react": "^2.1.5",
     "animate.css": "^4.1.1",
     "astro": "^4.14.3",
     "contentful": "^10.15.0",

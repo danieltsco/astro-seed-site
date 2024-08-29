@@ -1,36 +1,35 @@
 ---
 import { getEntries } from '../contentful';
-
+import Layout from '../layouts/Layout.astro';
 const entries = await getEntries('stories');
 ---
 
-<html>
-  <head>
-    <title>Seed Company Stories</title>
-  </head>
-  <body>
+<Layout title="Our Stories">
     <div class="story_grid__container">
-        {entries.items
-            .filter((entry) => entry.fields.category == "Featured")
-            .map((entry) => (
-              <div class="story_grid__item mb-5 md:mb-10">
-                {entry.fields.featuredImage && (
-                  <img
-                    class="rounded-md"
-                    src={entry.fields.featuredImage.fields.file.url}
-                    alt={
-                      entry.fields.featuredImage.fields.title || entry.fields.title
-                    }
-                    style="max-width: 100%; height: auto;"
-                  />
-                )}
-                <h2 class="text-2xl my-5">{entry.fields.title}</h2>
-                <p>{entry.fields.excerpt.content[0].content[0].value}</p>
-              </div>
-            ))}
-      </div>      
-  </body>
-</html>
+      {entries.items
+        .filter((entry) => entry.fields.category == "Featured")
+        .map((entry) => (
+          <a
+            href={`/stories/${entry.fields.slug}`} 
+            class="story_grid__item mb-5 md:mb-10"
+          >
+            {entry.fields.featuredImage && (
+              <img
+                class="rounded-md"
+                src={entry.fields.featuredImage.fields.file.url}
+                alt={
+                  entry.fields.featuredImage.fields.title || entry.fields.title
+                }
+                style="max-width: 100%; height: auto;"
+              />
+            )}
+            <h2 class="text-2xl my-5">{entry.fields.title}</h2>
+            <p>{entry.fields.excerpt.content[0].content[0].value}</p>
+          </a>
+        ))}
+    </div>      
+</Layout>
+
 <style>
   @media (min-width: 768px) {
     .story_grid__container {
@@ -43,6 +42,8 @@ const entries = await getEntries('stories');
       width: 100%;
       height: 100%;
       padding: 1rem 0;
+      text-decoration: none; /* Ensure the links have no underline */
+      color: inherit; /* Keep the text color as is */
     }
     .story_grid__item img {
       opacity: 1;

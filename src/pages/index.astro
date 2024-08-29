@@ -7,6 +7,7 @@ import RendilleVideo from '../components/RendilleVideo.astro';
 import Stories from '../components/Stories.astro';
 import Bernie from '../components/Bernie.astro';
 import CTA from '../components/CTA.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout title="Seed Company">
@@ -74,32 +75,53 @@ import CTA from '../components/CTA.astro';
 			</div>
 		</div>
 	</section>
-	<section class="mx-auto max-w-5xl px-[20px] py-20 md:py-20 mb-20 primary-bg">
+	<section class="md:mx-auto max-w-5xl px-[20px] py-20 mx-[20px] mb-20 primary-bg rounded-md">
 		<Bernie />
 	</section>
 	<section class="mx-auto max-w-5xl px-[20px] py-5 md:py-20 mb-20">
 		<CTA />
 	</section>
-</Layout>
-<style>
+	<section class="mx-auto">
+		<Footer />
+	</section>
 	
-</style>
+</Layout>
+
 <script>
 	// Animate OUR IMPACT data
 	function countTo(max, increment, delay, elementId) {
-		let counter = 0; // start from 0
-		let display = document.getElementById(elementId); // element to animate
+	let counter = 0; // start from 0
+	let display = document.getElementById(elementId); // element to animate
 
-		function updateCounter() { // update function
-			if ( counter <= max ) { 
-				display.textContent = counter; // show counter
-				counter += increment; // increment counter
-				setTimeout(updateCounter, delay); // add a delay
-			}
+	function updateCounter() { // update function
+		if (counter <= max) { 
+		display.textContent = counter; // show counter
+		counter += increment; // increment counter
+		setTimeout(updateCounter, delay); // add a delay
 		}
-		updateCounter(); // call the updated function
 	}
-	countTo(900, 5, 5, 'counterDisplay');
-	countTo(866, 1, 1, 'counterDisplay2');
-	countTo(130, 1, 1, 'counterDisplay3');
+	updateCounter(); // call the updated function
+	}
+
+	// Function to observe when the element is in view
+	function animateOnView(elementId, max, increment, delay) {
+	const element = document.getElementById(elementId);
+	
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach(entry => {
+		if (entry.isIntersecting) {
+			countTo(max, increment, delay, elementId); // trigger the counter
+			observer.unobserve(element); // stop observing once triggered
+		}
+		});
+	});
+
+	observer.observe(element);
+	}
+
+	// Trigger animations when each counter element is in view
+	animateOnView('counterDisplay', 900, 5, 5);
+	animateOnView('counterDisplay2', 866, 1, 1);
+	animateOnView('counterDisplay3', 130, 1, 1);
+
 </script>

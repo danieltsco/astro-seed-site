@@ -1,12 +1,20 @@
 ---
-
+import { Image } from 'astro:assets';
+import coverImage from '../assets/images/overview.jpg'
 ---
 
 <div style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0;">
     <!-- Poster Image -->
-    <img src="https://seedcompany.com/wp-content/uploads/2021/10/Seed-Company-Ministry-Overview.jpg" 
+    <Image 
+    src={coverImage} 
+    alt="Seed Company Overview"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer;"
+    loading="eager"
+    onclick="this.style.display='none'; document.getElementById('videoIframe').style.display='block';"></Image>
+    />
+    <!-- <img src="https://seedcompany.com/wp-content/uploads/2021/10/Seed-Company-Ministry-Overview.jpg" 
          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer;"
-         onclick="this.style.display='none'; document.getElementById('videoIframe').style.display='block';">
+         onclick="this.style.display='none'; document.getElementById('videoIframe').style.display='block';"> -->
   
     <!-- Hidden Iframe -->
     <iframe id="videoIframe" title="Seed Company - Overview" 

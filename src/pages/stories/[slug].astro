@@ -1,0 +1,85 @@
+---
+import { getEntries, getEntryBySlug } from '../../contentful';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+
+export async function getStaticPaths() {
+  const entries = await getEntries('stories');
+  return entries.items.map((entry) => ({
+    params: { slug: entry.fields.slug },
+    props: { story: entry },
+  }));
+}
+
+const { slug } = Astro.params;
+let title = '';
+let richTextContent = null;
+let featuredImage = null;
+
+const { story } = Astro.props || {};
+if (story) {
+  ({ title, richTextContent, featuredImage } = story.fields);
+} else {
+  const fetchedStory = await getEntryBySlug('stories', slug);
+  if (!fetchedStory) {
+    throw new Error(`Story not found: ${slug}`);
+  }
+  ({ title, richTextContent, featuredImage } = fetchedStory.fields);
+}
+
+const options = {
+  renderNode: {
+    [BLOCKS.PARAGRAPH]: (node) => `<p>${node.body.map((n) => n.value || '').join('')}</p>`,
+    [BLOCKS.IMAGE]: (node) => {
+      const { file, title } = node.data.target.fields;
+      return `<img src="${file.url}" alt="${title}" />`;
+    },
+    [INLINES.HYPERLINK]: (node) => `<a href="${node.data.uri}">${node.body[0].value}</a>`,
+  },
+};
+
+const contentHtml = richTextContent ? documentToHtmlString(richTextContent, options) : '';
+console.log(typeof contentHtml, contentHtml);
+---
+<Layout>
+  <Navbar />
+  <div class="mx-auto max-w-5xl px-[20px] pt-20 md:py-10 lg:py-56">
+    <article>
+      <h1 class="text-2xl md:text-4xl tracking-tight text-gray-900 animate__animated animate__fadeInUp">{title}</h1>
+      <div class="animate__animated animate__fadeInUp text-lg py-5">
+        <span>
+            <a href="/stories">Stories</a>&nbsp;/&nbsp;
+        </span> 
+        <span class="primary-color">{title}</span>
+      </div>
+      {featuredImage && (
+        <img class="featured_image rounded-md animate__animated animate__fadeInUp" src={featuredImage.fields.file.url} alt={featuredImage.fields.title} />
+      )}
+      <div class="content py-10 text-slate-400" dangerouslySetInnerHTML={{ __html: contentHtml }}></div>
+    </article>
+  </div>
+</Layout>
+
+<style>
+  .featured_image {
+    max-height: 250px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  @media (min-width: 768px) {
+    .featured_image {
+      max-height: 450px;
+      width: 100%;
+      object-fit: cover;
+      object-position: top;
+    }    
+  }
+  article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+</style>

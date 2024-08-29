@@ -1,9 +1,5 @@
 import contentful from 'contentful';
 
-// Log environment variables for debugging
-console.log('Space ID:', import.meta.env.CONTENTFUL_SPACE_ID);
-console.log('Access Token:', import.meta.env.CONTENTFUL_ACCESS_TOKEN);
-
 // Create the Contentful client
 const client = contentful.createClient({
   space: import.meta.env.CONTENTFUL_SPACE_ID,
@@ -18,6 +14,20 @@ export async function getEntries(contentType) {
     return entries;
   } catch (error) {
     console.error('Error fetching entries:', error);
+    throw error;
+  }
+}
+// Function to get a single entry by ID or slug
+export async function getEntryBySlug(contentType, slug) {
+  try {
+    const entries = await client.getEntries({
+      content_type: contentType,
+      'fields.slug': slug,
+      limit: 1
+    });
+    return entries.items.length ? entries.items[0] : null;
+  } catch (error) {
+    console.error('Error fetching entry by slug:', error);
     throw error;
   }
 }
